@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -19,21 +20,18 @@ public class LeadController {
     private LeadService leadService;
 
     @PostMapping("/save")
-    public ResponseEntity<String> saveLead(@Valid @RequestBody LeadPayload leadPayload) {
+    public ResponseEntity<Map<String, Object>> saveLead(@Valid @RequestBody LeadPayload leadPayload) {
         log.info(" lead payload====>" + leadPayload);
-        if (leadService.saveLeadInfo(leadPayload)) {
-            return ResponseEntity.ok("Data is already present in db");
-        } else {
-            return ResponseEntity.ok("Data saved successfully");
-        }
+        return leadService.saveLeadInfo(leadPayload);
     }
+
 
     @GetMapping("/get")
     public List<LeadEntity> getLead() {
-        List<LeadEntity> leadEntitiesList= leadService.getAllLead();
+        List<LeadEntity> leadEntitiesList = leadService.getAllLead();
         log.info(" lead payload====>");
         return leadEntitiesList;
     }
-
-
 }
+
+
